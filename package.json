@@ -4,6 +4,7 @@
   "description": "A vite plugin that support require.context in vite",
   "main": "index.js",
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,5 +23,10 @@
   "homepage": "https://github.com/originjs/vite-plugin-require-context#readme",
   "dependencies": {
     "node-dir": "^0.1.17"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.1",
+    "typescript": "^4.3.2",
+    "vite": "^2.3.6"
   }
 }

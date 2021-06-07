@@ -1,13 +1,14 @@
-const dir = require('node-dir')
-const path = require('path')
+import * as path from 'path'
+import { Plugin } from 'vite'
+import { files } from 'node-dir'
 
-export default function requireContext(projectBasePath) {
+export default (projectBasePath: string): Plugin => {
     return {
         name: 'vite:require-context',
         apply: 'serve',
-        async transform(code, id) {
-            const requireContextRegex = /require\.context\((.+)\)/g
-            const nodeModulesPath = '/node_modules/'
+        async transform(code: string, id: string) {
+            const requireContextRegex: RegExp = /require\.context\((.+)\)/g
+            const nodeModulesPath: string = '/node_modules/'
 
             if (id.includes(nodeModulesPath)) {
                 return null
@@ -18,14 +19,14 @@ export default function requireContext(projectBasePath) {
                 return null
             }
 
-            let transformedCode = code
-            let importsStrings = ''
+            let transformedCode: string = code
+            let importsStrings: string = ''
 
             requireContextMatches.forEach((requireContextMatch, index) => {
-                const params = requireContextMatch[1].split(',')
-                const directory = params[0] || ''
-                const recursive = params[1] || ''
-                const regExp = params[2] || ''
+                const params: string[] = requireContextMatch[1].split(',')
+                const directory: string = params[0] || ''
+                const recursive: string = params[1] || ''
+                const regExp: string = params[2] || ''
 
                 const { importsString, requireContextString } = transformRequireContext(
                     eval(directory),
@@ -50,15 +51,15 @@ export default function requireContext(projectBasePath) {
 }
 
 function transformRequireContext(
-    directory,
-    recursive = false,
-    regExp = /\.(json|js)$/,
-    workingFilePath,
-    projectBasePath = process.cwd(),
-    matchIndex
+    directory: string,
+    recursive: boolean = false,
+    regExp: RegExp = /\.(json|js)$/,
+    workingFilePath: string,
+    projectBasePath: string = process.cwd(),
+    matchIndex: number
 ) {
-    const importStringPrefix = '__require_context_for_vite'
-    let basePath
+    const importStringPrefix: string = '__require_context_for_vite'
+    let basePath: string
 
     switch (directory[0]) {
         case '.' :
@@ -74,8 +75,7 @@ function transformRequireContext(
             basePath = path.join(projectBasePath, 'node_modules', directory)
     }
 
-    const absolutePaths = dir
-        .files(basePath, {
+    const absolutePaths: string[] = files(basePath, {
             sync: true,
             recursive: recursive,
         })
@@ -86,21 +86,21 @@ function transformRequireContext(
             return absolutePath.replace(/\\/g, '/')
         })
 
-    const importedFiles = absolutePaths.map((absolutePath) => {
+    const importedFiles: string[] = absolutePaths.map((absolutePath) => {
         return absolutePath.slice(projectBasePath.length)
     })
 
-    const keys = absolutePaths.map((absolutePath) => {
+    const keys: string[] = absolutePaths.map((absolutePath) => {
         return absolutePath.slice(basePath.length + 1)
     })
 
-    let importsString = ''
-    let requireContextString = '{'
-    for (let i = 0; i < keys.length; i++) {
-        const importEntry = `${importStringPrefix}_${matchIndex}_${i}`
-        importsString += `import * as ${importEntry} from "${importedFiles[i]}";`
-        requireContextString += ` ${JSON.stringify(keys[i])} : ${importEntry},`
-    }
+    let importsString: string = ''
+    let requireContextString: string = '{'
+    keys.forEach((key, index) => {
+        const importEntry:string = `${importStringPrefix}_${matchIndex}_${index}`
+        importsString += `import * as ${importEntry} from "${importedFiles[index]}";`
+        requireContextString += ` ${JSON.stringify(key)} : ${importEntry},`
+    })
     requireContextString = requireContextString.substring(0, requireContextString.length - 2) + '}'
 
     return {
