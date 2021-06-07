@@ -52,7 +52,7 @@ export default function requireContext(projectBasePath) {
 function transformRequireContext(
     directory,
     recursive = false,
-    regExt = /\.(json|js)$/,
+    regExp = /\.(json|js)$/,
     workingFilePath,
     projectBasePath = process.cwd(),
     matchIndex
@@ -99,7 +99,7 @@ function transformRequireContext(
     for (let i = 0; i < keys.length; i++) {
         const importEntry = `${importStringPrefix}_${matchIndex}_${i}`
         importsString += `import * as ${importEntry} from "${importedFiles[i]}";`
-        requireContextString += ` ${JSON.stringfy(keys[i])} : ${importEntry},`
+        requireContextString += ` ${JSON.stringify(keys[i])} : ${importEntry},`
     }
     requireContextString = requireContextString.substring(0, requireContextString.length - 2) + '}'
 
