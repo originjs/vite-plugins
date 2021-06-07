@@ -6,8 +6,10 @@
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
+  "main": "lib/index.js",
   "files": [
-    "src"
+    "src",
+    "lib"
   ],
   "repository": {
     "type": "git",

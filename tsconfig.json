@@ -4,10 +4,11 @@
   "compilerOptions": {
     "declaration": true,
     "sourceMap": true,
+    "outDir": "lib",
     "target": "es2018",
     "module": "commonjs",
     "lib": [
-      "es2020.string",
+      "es2020.string"
     ],
     "noUnusedLocals": true,
     "noUnusedParameters": true,
