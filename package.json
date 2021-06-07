@@ -1,11 +1,14 @@
 {
   "name": "@originjs/vite-plugin-require-context",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "description": "A vite plugin that support require.context in vite",
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
+  "files": [
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/originjs/vite-plugin-require-context.git"
