@@ -3,9 +3,19 @@ import { Plugin } from 'vite'
 import { files } from 'node-dir'
 
 type PluginOptions = {
+    /**
+     * The base path of your project used in require.context. Default to be `process.cwd()`
+     */
     projectBasePath?: string,
+
+    /**
+     * The default RegExp used in `require.context` if the third parameter of `require.context` is not specified. Default to be `/\.(json|js)$/`
+     */
     defaultRegExp?: RegExp
 }
+
+const DEFAULT_REGEXP: RegExp = /\.(json|js)$/
+const DEFAULT_PROJECT_BASE_PATH: string = process.cwd()
 
 export default (options: PluginOptions = {}): Plugin => {
     return {
@@ -58,9 +68,9 @@ export default (options: PluginOptions = {}): Plugin => {
 function transformRequireContext(
     directory: string,
     recursive: boolean = false,
-    regExp: RegExp = /\.(json|js)$/,
+    regExp: RegExp = DEFAULT_REGEXP,
     workingFilePath: string,
-    projectBasePath: string = process.cwd(),
+    projectBasePath: string = DEFAULT_PROJECT_BASE_PATH,
     matchIndex: number
 ) {
     const importStringPrefix: string = '__require_context_for_vite'

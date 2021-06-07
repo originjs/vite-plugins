@@ -25,7 +25,7 @@ export default {
 ### Options
 
 - `projectBasePath: string`
-   The base path of your project. Default to be `process.cwd()`
+  The base path of your project used in require.context. Default to be `process.cwd()`
   
 - `defaultRegExp: RegExp`
    The default RegExp used in `require.context` if the third parameter of `require.context` is not specified. Default to be `/\.(json|js)$/`
