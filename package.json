@@ -4,8 +4,7 @@
   "description": "A vite plugin that support require.context in vite",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",
