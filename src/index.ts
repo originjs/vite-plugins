@@ -116,7 +116,7 @@ function transformRequireContext(
         importsString += `import * as ${importEntry} from "${importedFiles[index]}";`
         requireContextString += ` ${JSON.stringify(key)} : ${importEntry},`
     })
-    requireContextString = requireContextString.substring(0, requireContextString.length - 2) + '}'
+    requireContextString = requireContextString.substring(0, requireContextString.length - 1) + '}'
 
     return {
         importsString,
