@@ -2,7 +2,12 @@ import * as path from 'path'
 import { Plugin } from 'vite'
 import { files } from 'node-dir'
 
-export default (projectBasePath: string): Plugin => {
+type PluginOptions = {
+    projectBasePath?: string,
+    defaultRegExp?: RegExp
+}
+
+export default (options: PluginOptions = {}): Plugin => {
     return {
         name: 'vite:require-context',
         apply: 'serve',
@@ -31,9 +36,9 @@ export default (projectBasePath: string): Plugin => {
                 const { importsString, requireContextString } = transformRequireContext(
                     eval(directory),
                     eval(recursive),
-                    eval(regExp),
+                    eval(regExp) || options.defaultRegExp,
                     id,
-                    projectBasePath,
+                    options.projectBasePath,
                     index
                 )
 
