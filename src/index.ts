@@ -85,7 +85,7 @@ function transformRequireContext(
 
     switch (directory[0]) {
         case '.' :
-            basePath = path.join(workingFilePath, '..\\', directory)
+            basePath = path.join(workingFilePath, '..' + path.sep, directory)
             break
         case '/' :
             basePath = path.join(projectBasePath, directory)
