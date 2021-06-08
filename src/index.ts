@@ -115,15 +115,7 @@ function transformRequireContext(
     const key2FilesMap = generateKey2FilesMap(keys, importedFiles, matchIndex)
     const importsString = generateImportsString(keys, importedFiles, matchIndex)
     const key2FilesMapString = generateKey2FilesMapString(key2FilesMap, requireContextMapName)
-    const contextFunctionString = generateContextFunctionString(requireContextFunctionName, requireContextMapName, matchIndex)
-
-    // let requireContextString: string = '{'
-    // keys.forEach((key, index) => {
-    //     const importEntry:string = `${importStringPrefix}_${matchIndex}_${index}`
-    //     importsString += `import * as ${importEntry} from "${importedFiles[index]}";`
-    //     requireContextString += ` ${JSON.stringify(key)} : ${importEntry},`
-    // })
-    // requireContextString = requireContextString.substring(0, requireContextString.length - 1) + '}'
+    const contextFunctionString = generateContextFunctionString(requireContextFunctionName, requireContextMapName)
 
     return {
         importsString,
@@ -180,8 +172,7 @@ function generateKey2FilesMapString (
 
 function generateContextFunctionString(
     requireContextFunctionName: string,
-    requireContextMapName: string,
-    matchIndex: number
+    requireContextMapName: string
 ): string {
     const requireContextResolveFunctionName = `${requireContextFunctionName}_resolve`
     const requireContextKeysFunctionName = `${requireContextFunctionName}_keys`
@@ -210,8 +201,8 @@ function generateContextFunctionString(
     contextFunctionString += `${requireContextFunctionName}.resolve = ${requireContextResolveFunctionName}\n`
 
     // webpackContext.id
-    // TODO: not implemented
-    contextFunctionString += `${requireContextFunctionName}.id = "id${matchIndex}"\n`
+    // TODO: not implemented as webpack did
+    contextFunctionString += `${requireContextFunctionName}.id = "${requireContextStringPrefix}_${requireContextFunctionName}"\n`
 
     return contextFunctionString
 }
