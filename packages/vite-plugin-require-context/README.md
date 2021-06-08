@@ -75,7 +75,7 @@ __require_context_for_vite_function_0.keys = function __require_context_for_vite
     return Object.keys(__require_context_for_vite_map_0);
 }
 __require_context_for_vite_function_0.resolve = __require_context_for_vite_function_0_resolve
-__require_context_for_vite_function_0.id = "__require_context_for_vite___require_context_for_vite_function_0"
+__require_context_for_vite_function_0.id = "__require_context_for_vite_function_0"
 // end of generated code of __require_context_for_vite_function_0
 
 const requireComponents = __require_context_for_vite_function_0
