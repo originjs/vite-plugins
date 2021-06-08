@@ -1,19 +1,13 @@
 {
-  "include": ["src"],
-  "exclude": [],
+  "include": ["packages"],
   "compilerOptions": {
     "declaration": true,
-    "sourceMap": true,
     "outDir": "lib",
-    "target": "es2018",
-    "module": "commonjs",
-    "lib": [
-      "es2020.string"
-    ],
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "target": "esnext",
+    "module": "esnext",
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true
   }
 }

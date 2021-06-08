@@ -1,0 +1,35 @@
+{
+  "name": "@originjs/vite-plugin-commonjs",
+  "version": "1.0.0-beta3",
+  "description": "A vite plugin that support commonjs to esm in vite",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "src",
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/originjs/vite-plugins.git"
+  },
+  "keywords": [
+    "vite",
+    "commonjs"
+  ],
+  "author": "jiawulin@vip.qq.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/originjs/vite-plugins/issues"
+  },
+  "homepage": "https://github.com/originjs/vite-pluginst#readme",
+  "dependencies": {
+    "esbuild": "^0.12.6"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.2",
+    "typescript": "^4.3.2",
+    "vite": "^2.3.6"
+  }
+}
