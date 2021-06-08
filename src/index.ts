@@ -204,7 +204,7 @@ function generateContextFunctionString(
     // webpackConext.keys
     contextFunctionString += `${requireContextFunctionName}.keys = function ${requireContextKeysFunctionName}() {
         return Object.keys(${requireContextMapName});
-    }`
+    }\n`
 
     // webpackContext.resolve
     contextFunctionString += `${requireContextFunctionName}.resolve = ${requireContextResolveFunctionName}\n`
