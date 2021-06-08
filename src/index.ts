@@ -173,7 +173,7 @@ function generateKey2FilesMapString (
     Object.keys(key2FilesMap).forEach((key) => {
         key2FilesMapString += `"${key}" : ${key2FilesMap[key].importEntry},\n`
     })
-    key2FilesMapString = key2FilesMapString.substring(0, key2FilesMapString.length - 2) + '\n}'
+    key2FilesMapString = key2FilesMapString.substring(0, key2FilesMapString.length - 2) + '\n};\n'
 
     return key2FilesMapString
 }
@@ -186,32 +186,32 @@ function generateContextFunctionString(
     const requireContextResolveFunctionName = `${requireContextFunctionName}_resolve`
     const requireContextKeysFunctionName = `${requireContextFunctionName}_keys`
     // webpackContext(req)
-    let contextFunctionString = `function ${requireContextFunctionName}(req) {\n
-        var id = ${requireContextResolveFunctionName}(req);\n
-        return ${requireContextMapName}[req];\n
+    let contextFunctionString = `function ${requireContextFunctionName}(req) {
+        var id = ${requireContextResolveFunctionName}(req);
+        return ${requireContextMapName}[req];
     }\n`
 
     // webpackContextResolve(req)
-    contextFunctionString += `function ${requireContextResolveFunctionName}(req) {\n
-        if (req in ${requireContextMapName}) {\n
-            return ${requireContextMapName}[req];\n
-        }\n
-        var e = new Error("Cannot find module '" + req + "'");\n
-        e.code = 'MODULE_NOT_FOUND';\n
-        throw e;\n
+    contextFunctionString += `function ${requireContextResolveFunctionName}(req) {
+        if (req in ${requireContextMapName}) {
+            return ${requireContextMapName}[req];
+        }
+        var e = new Error("Cannot find module '" + req + "'");
+        e.code = 'MODULE_NOT_FOUND';
+        throw e;
     }\n`
 
     // webpackConext.keys
-    contextFunctionString += `${requireContextFunctionName}.keys = function ${requireContextKeysFunctionName}() {\n
-        return Object.keys(${requireContextMapName});\n
-    }\n`
+    contextFunctionString += `${requireContextFunctionName}.keys = function ${requireContextKeysFunctionName}() {
+        return Object.keys(${requireContextMapName});
+    }`
 
     // webpackContext.resolve
     contextFunctionString += `${requireContextFunctionName}.resolve = ${requireContextResolveFunctionName}\n`
 
     // webpackContext.id
     // TODO: not implemented
-    contextFunctionString += `${requireContextFunctionName}.id = "id${matchIndex}"`
+    contextFunctionString += `${requireContextFunctionName}.id = "id${matchIndex}\n"`
 
     return contextFunctionString
 }
