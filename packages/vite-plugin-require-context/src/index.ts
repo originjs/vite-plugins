@@ -209,7 +209,7 @@ function generateContextFunctionString(
 
     // webpackContext.id
     // TODO: not implemented as webpack did
-    contextFunctionString += `${requireContextFunctionName}.id = "${REQUIRE_CONTEXT_STRING_PREFIX}_${requireContextFunctionName}"\n`
+    contextFunctionString += `${requireContextFunctionName}.id = "${requireContextFunctionName}"\n`
 
     return contextFunctionString
 }
