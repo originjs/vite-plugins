@@ -163,7 +163,7 @@ function generateKey2FilesMapString (
 ): string {
     let key2FilesMapString = `var ${requireContextMapName} = {\n`
     Object.keys(key2FilesMap).forEach((key) => {
-        key2FilesMapString += `"${key}" : ${key2FilesMap[key].importEntry},\n`
+        key2FilesMapString += `\t"${key}" : ${key2FilesMap[key].importEntry},\n`
     })
     key2FilesMapString = key2FilesMapString.substring(0, key2FilesMapString.length - 2) + '\n};\n'
 
@@ -178,24 +178,24 @@ function generateContextFunctionString(
     const requireContextKeysFunctionName = `${requireContextFunctionName}_keys`
     // webpackContext(req)
     let contextFunctionString = `function ${requireContextFunctionName}(req) {
-        var id = ${requireContextResolveFunctionName}(req);
-        return ${requireContextMapName}[req];
-    }\n`
+    var id = ${requireContextResolveFunctionName}(req);
+    return ${requireContextMapName}[req];
+}\n`
 
     // webpackContextResolve(req)
     contextFunctionString += `function ${requireContextResolveFunctionName}(req) {
-        if (req in ${requireContextMapName}) {
-            return ${requireContextMapName}[req];
-        }
-        var e = new Error("Cannot find module '" + req + "'");
-        e.code = 'MODULE_NOT_FOUND';
-        throw e;
-    }\n`
+    if (req in ${requireContextMapName}) {
+        return ${requireContextMapName}[req];
+    }
+    var e = new Error("Cannot find module '" + req + "'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+}\n`
 
     // webpackConext.keys
     contextFunctionString += `${requireContextFunctionName}.keys = function ${requireContextKeysFunctionName}() {
-        return Object.keys(${requireContextMapName});
-    }\n`
+    return Object.keys(${requireContextMapName});
+}\n`
 
     // webpackContext.resolve
     contextFunctionString += `${requireContextFunctionName}.resolve = ${requireContextResolveFunctionName}\n`
