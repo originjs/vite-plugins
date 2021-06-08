@@ -211,7 +211,7 @@ function generateContextFunctionString(
 
     // webpackContext.id
     // TODO: not implemented
-    contextFunctionString += `${requireContextFunctionName}.id = "id${matchIndex}\n"`
+    contextFunctionString += `${requireContextFunctionName}.id = "id${matchIndex}"\n`
 
     return contextFunctionString
 }
