@@ -57,3 +57,5 @@ dist
 
 # TernJS port file
 .tern-port
+
+packages/vite-plugin-commonjs/lib

@@ -59,7 +59,7 @@ function randomString(length: number): string {
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   let result: string = "";
   for (let index = 0; index < length; index++) {
-    result += code[Math.floor(Math.random() * String.length)];
+    result += code[Math.floor(Math.random() * code.length)];
   }
   return result;
 }

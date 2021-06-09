@@ -2,7 +2,13 @@
   "extends": "../../tsconfig.json",
   "include": ["src"],
   "compilerOptions": {
-    "outDir": "library",
-    "baseUrl": "."
+    "outDir": "lib",
+    "target": "es2018",
+    "module": "commonjs",
+    "lib": [
+      "es2020.string"
+    ]
   }
 }
+
+    
