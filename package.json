@@ -12,7 +12,7 @@
     "plugins"
   ],
   "author": "@originjs",
-  "license": "Apache-2.0",
+  "license": "MulanPSL2",
   "bugs": {
     "url": "https://github.com/originjs/vite-plugins/issues"
   },
