@@ -6,12 +6,12 @@ const commonJSRegex: RegExp = /\b(module\.exports|exports\.\w+|exports\s*=\s*)/;
 const requireRegex: RegExp = /require\(([\'|\"].*[\'|\"])\)/g;
 const IMPORT_STRING_PREFIX: String = "__require_for_vite";
 
-type PluginOptions = {
+type Options = {
     include?: string | RegExp | string[] | RegExp[] | undefined;
     exclude?: string | RegExp | string[] | RegExp[] | undefined;
 };
 
-export default (options: PluginOptions = {}): Plugin => {
+export default (options: Options = {}): Plugin => {
     const filter = createFilter(options.include, options.exclude);
 
     return {
