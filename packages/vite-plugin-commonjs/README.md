@@ -26,4 +26,7 @@ export default {
 
 - `exclude: string[]`
   Dependencies to exclude from transform.
+
+-  `include: string[]`
+  Dependencies that only need to be transform.
   

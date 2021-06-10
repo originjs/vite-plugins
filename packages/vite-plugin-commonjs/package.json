@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/originjs/vite-pluginst#readme",
   "dependencies": {
+    "@rollup/pluginutils": "^4.1.0",
     "esbuild": "^0.12.6"
   },
   "devDependencies": {
