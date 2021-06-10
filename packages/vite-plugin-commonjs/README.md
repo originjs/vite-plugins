@@ -22,11 +22,29 @@ export default {
 }
 ```
 
-### Options
+#### Options
 
 - `exclude: string[]`
   Dependencies to exclude from transform.
 
 -  `include: string[]`
   Dependencies that only need to be transform.
-  
+
+### CommonJS module in node_modules
+```js
+import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
+
+export default {
+    optimizeDeps:{
+    esbuildOptions:{
+      plugins:[
+        esbuildCommonjs(['react-calendar','react-date-picker']) 
+      ]
+    }
+  }
+}
+```
+#### Options
+
+- `include: string[]`
+  Dependent modules need to be transform.

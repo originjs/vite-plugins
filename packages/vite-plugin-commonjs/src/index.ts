@@ -9,7 +9,7 @@ type Options = {
   exclude?: string | RegExp | string[] | RegExp[] | undefined;
 };
 
-export function viteCommonjs(options: Options = {}): Plugin {
+export default function viteCommonjs(options: Options = {}): Plugin {
   const filter = createFilter(options.include, options.exclude);
   return {
     name: "originjs:commonjs",
@@ -35,13 +35,13 @@ export function viteCommonjs(options: Options = {}): Plugin {
   }
 };
 
-export function esbuildCommonjs(includes: string[] = []) {
+export function esbuildCommonjs(include: string[] = []) {
   return {
     name: "originjs:commonjs",
     setup(build) {
       build.onLoad(
         {
-          filter: new RegExp('(' + includes.join('|') + ').*\.js'),
+          filter: new RegExp('(' + include.join('|') + ').*\.js'),
           namespace: 'file'
         },
         async ({ path: id }) => {
