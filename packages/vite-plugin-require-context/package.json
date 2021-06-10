@@ -1,6 +1,6 @@
 {
   "name": "@originjs/vite-plugin-require-context",
-  "version": "1.0.0-beta8",
+  "version": "1.0.0-beta9",
   "description": "A vite plugin that support require.context in vite",
   "scripts": {
     "build": "tsc -p tsconfig.json"
