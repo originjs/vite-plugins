@@ -15,7 +15,7 @@
     "url": "git+https://github.com/originjs/vite-plugins.git"
   },
   "keywords": [
-    "vite",
+    "vite-plugin",
     "require.context"
   ],
   "author": "Peter Lee",

@@ -7,7 +7,6 @@
   },
   "main": "lib/index.js",
   "files": [
-    "src",
     "lib"
   ],
   "repository": {
@@ -15,7 +14,7 @@
     "url": "git+https://github.com/originjs/vite-plugins.git"
   },
   "keywords": [
-    "vite",
+    "vite-plugin",
     "commonjs"
   ],
   "author": "jiawulin@vip.qq.com",
