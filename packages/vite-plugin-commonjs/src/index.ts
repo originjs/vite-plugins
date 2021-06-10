@@ -1,6 +1,5 @@
 import { transformSync, TransformResult } from "esbuild";
 import { Plugin } from "vite";
-import { sep } from "path";
 import { createFilter } from "@rollup/pluginutils";
 
 const commonJSRegex: RegExp = /\b(module\.exports|exports\.\w+|exports\s*=\s*)/;
@@ -12,7 +11,7 @@ type PluginOptions = {
     exclude?: string | RegExp | string[] | RegExp[] | undefined;
 };
 
-export default (options: PluginOptions): Plugin => {
+export default (options: PluginOptions = {}): Plugin => {
     const filter = createFilter(options.include, options.exclude);
 
     return {
@@ -27,7 +26,7 @@ export default (options: PluginOptions): Plugin => {
             let importsString = "";
             let packageName = "";
             for (let item of requireMatches) {
-                if (!isString(item[0])) {
+                if (!isString(item[1])) {
                     console.warn(`Not supported dynamic import, file:${id}`);
                     continue;
                 }
