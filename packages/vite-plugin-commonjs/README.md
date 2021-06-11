@@ -13,11 +13,11 @@ yarn add @originjs/vite-plugin-commonjs --dev
 
 ## Usage
 ```js
-import commonjs from '@originjs/vite-plugin-commonjs'
+import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 
 export default {
     plugins: [
-        commonjs()
+        viteCommonjs()
     ]
 }
 ```
