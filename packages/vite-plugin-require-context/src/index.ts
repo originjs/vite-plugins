@@ -9,7 +9,7 @@ type PluginOptions = {
     projectBasePath?: string,
 
     /**
-     * The default RegExp used in `require.context` if the third parameter of `require.context` is not specified. Default to be `/\.(json|js)$/`
+     * The default RegExp used in `require.context` if the third parameter of `require.context` is not specified. Default to be `/^.*$/`
      */
     defaultRegExp?: RegExp
 }
