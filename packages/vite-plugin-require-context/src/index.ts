@@ -15,7 +15,7 @@ type PluginOptions = {
 }
 
 const DEFAULT_PROJECT_BASE_PATH: string = process.cwd()
-const DEFAULT_USE_RECURSIVE: boolean = false
+const DEFAULT_USE_RECURSIVE: boolean = true
 /**
  * default regexp used to search files, different from the one in webpack(/^\.\/.*$/)
  * the default regexp will match every file
