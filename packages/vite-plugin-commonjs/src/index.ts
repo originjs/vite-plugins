@@ -2,11 +2,11 @@ import { transformSync, TransformResult } from "esbuild";
 import { transformRequire, isCommonJS } from "./lib";
 import * as fs from "fs";
 import { Plugin } from "vite";
-import { createFilter } from "@rollup/pluginutils";
+import createFilter from "./filter";
 
-type Options = {
-  include?: string | RegExp | string[] | RegExp[] | undefined;
-  exclude?: string | RegExp | string[] | RegExp[] | undefined;
+export type Options = {
+  include?: string | string[] | undefined;
+  exclude?: string | string[] | undefined;
   skipPreBuild?: boolean;
 };
 
