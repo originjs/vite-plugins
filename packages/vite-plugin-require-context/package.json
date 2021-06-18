@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "A vite plugin that support require.context in vite",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "test": "jest",
+    "test-c": "jest --coverage"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "main": "lib/index.js",
   "files": [
@@ -25,11 +30,14 @@
   },
   "homepage": "https://github.com/originjs/vite-plugins/tree/main/packages/vite-plugin-require-context#readme",
   "dependencies": {
+    "@types/jest": "^26.0.23",
     "node-dir": "^0.1.17"
   },
   "devDependencies": {
     "@types/node": "^15.12.1",
-    "typescript": "^4.3.2",
+    "jest": "^27.0.4",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.3",
     "vite": "^2.3.6"
   }
 }
