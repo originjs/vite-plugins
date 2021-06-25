@@ -1,5 +1,5 @@
 const commonJSRegex: RegExp = /\b(module\.exports|exports\.\w+|exports\s*=\s*)/;
-const requireRegex: RegExp = /require\s*\(\s*(["'].*["'])\s*\)/g;
+const requireRegex: RegExp = /require\s*\(\s*(["'].*?["'])\s*\)/g;
 const IMPORT_STRING_PREFIX: String = "__require_for_vite";
 
 export interface TransformRequireResult {

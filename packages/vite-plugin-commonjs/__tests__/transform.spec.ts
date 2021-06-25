@@ -22,6 +22,10 @@ test('transform require', () => {
     code = `require('./module.js').message = "hello";`
     result = transformRequire(code, 'main.ts');
     expect(result.code).toMatch(/import \* as .+ from '\.\/module.js';\n.+\.message = "hello"/);
+
+    code = `const login = r => require.ensure([], () => r(require('@/page/login')), 'login');`
+    result = transformRequire(code, 'main.ts');
+    expect(result.code).toMatch(/import \* as .+ from \'@\/page\/login';/);
 });
 
 test('isCommonJS', () => {
