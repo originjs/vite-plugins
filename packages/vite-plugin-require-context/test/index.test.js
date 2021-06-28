@@ -60,6 +60,23 @@ test('require context base on project path', () => {
     });
 });
 
+test('require context can work on code with comment', () => {
+    const code = `const requireComponents = require.context(
+    // comment A
+    '/test/components',
+    // comment B
+    true,
+    // comment C
+    /.*/);`;
+    const id = process.cwd().replace(/\\/g, '/') + '/' + 'src' + '/' + 'main.js';
+    const resultCode = require_context.default().transform(code, id);
+    const expectCode = fs.readFileSync('./test/expects/recursiveresult.txt','utf-8');
+
+    return resultCode.then(data => {
+        expect(data.code).toBe(expectCode);
+    });
+});
+
 //require context base on the /src
 test('require context base on the /src', () => {
     const code = 'const requireComponents = require.context(\'@/../test/components\', true, /.*/);';

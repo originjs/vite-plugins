@@ -3,7 +3,7 @@ Support `require.context` in `vite`.
 
 ## Features
 - Based on RegExp search and replacement.
-- Only `snyc` mode is supported for now.
+- Only `snyc`/`eager` mode is supported for now.
 - The default regexp is `/^.*$/`, and it's different from webpack's default regexp `/^\.\/.*$/`.
 - The implementation of `require.context.id` is different from webpack.
 - Syntax supported :
@@ -38,7 +38,7 @@ export default {
   The base path of your project used in require.context. Default to be `process.cwd()`
 
 - `defaultRegExp: RegExp`
-  The default RegExp used in `require.context` if the third parameter of `require.context` is not specified. Default to be `/^.*$/`
+  The default RegExp used in `require.context` if the third parameter `regExp` of `require.context` is not specified. Default to be `/^.*$/`
 
 ## Implementation details
 The following `require.context`
