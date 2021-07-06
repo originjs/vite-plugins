@@ -119,12 +119,16 @@ function transformRequireContext(
             sync: true,
             recursive: recursive,
         })
-        .map(function (absolutePath) {
+        .map(function (path) {
             // deal with the file separator in windows
-            return absolutePath.replace(/\\/g, '/')
+            let p = path.replace(/\\/g, '/')
+            return './' + p.slice(basePath.length + 1)
         })
         .filter(function (file) {
             return file.match(regExp)
+        })
+        .map(function (path) {
+            return basePath + path.slice(1)
         })
 
     // the actual files to be imported
