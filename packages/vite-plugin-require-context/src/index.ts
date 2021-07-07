@@ -115,6 +115,13 @@ function transformRequireContext(
             basePath = path.join(projectBasePath, 'node_modules', directory)
     }
 
+    // for windows, the path.join will return with a path ending with a '/'
+    // for linux/macos, the path.join will return with a path ending without '/'
+    basePath = basePath.replace(/\\/g, '/')
+    if (basePath.endsWith('/')) {
+        basePath = basePath.substring(0, basePath.length - 1)
+    }
+
     const absolutePaths: string[] = files(basePath, {
             sync: true,
             recursive: recursive,
