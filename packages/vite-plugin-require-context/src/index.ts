@@ -228,6 +228,11 @@ function generateKey2FilesMapString (
     key2FilesMap: object,
     requireContextMapName: string
 ): string {
+    // return empty object if no files are matched
+    if (Object.keys(key2FilesMap).length == 0) {
+        return `var ${requireContextMapName} = {};\n`
+    }
+
     let key2FilesMapString = `var ${requireContextMapName} = {\n`
     Object.keys(key2FilesMap).forEach((key) => {
         key2FilesMapString += `\t"${key}" : ${key2FilesMap[key].importEntry},\n`

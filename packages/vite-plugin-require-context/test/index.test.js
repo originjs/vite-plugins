@@ -88,3 +88,15 @@ test('require context base on the /src', () => {
         expect(data.code).toBe(expectCode);
     });
 });
+
+//require context can not find any matched files
+test('require context can not find any matched files', () => {
+    const code = 'const requireComponents = require.context(\'/test/components\', true, /\.nomatch$/);\n';
+    const id = process.cwd().replace(/\\/g, '/') + '/' + 'src' + '/' + 'main.js';
+    const resultCode = require_context.default().transform(code, id);
+    const expectCode = fs.readFileSync('./test/expects/no_match_result.txt','utf-8');
+
+    return resultCode.then(data => {
+        expect(data.code).toBe(expectCode);
+    });
+});
