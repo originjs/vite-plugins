@@ -1,5 +1,5 @@
 const commonJSRegex: RegExp = /\b(module\.exports|exports\.\w+|exports\s*=\s*)/;
-const requireRegex: RegExp = /require\s*\(\s*(["'].*?["'])\s*\)/g;
+const requireRegex: RegExp = /_{0,2}require\s*\(\s*(["'].*["'])\s*\)/g;
 const IMPORT_STRING_PREFIX: String = "__require_for_vite";
 
 export interface TransformRequireResult {
@@ -20,7 +20,7 @@ export function transformRequire(code: string, id: string):TransformRequireResul
     replaced = true;
     packageName = `${IMPORT_STRING_PREFIX}_${randomString(6)}`;
     importsString += `import * as ${packageName} from ${item[1]};\n`;
-    code = code.replace(item[0], packageName);
+    code = code.replace(item[0], `${packageName}.default || ${packageName}`);
   }
 
   if (replaced) {
