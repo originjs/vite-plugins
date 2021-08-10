@@ -1,17 +1,31 @@
 const commonJSRegex: RegExp = /\b(module\.exports|exports\.\w+|exports\s*=\s*)/;
-const requireRegex: RegExp = /_{0,2}require\s*\(\s*(["'].*["'])\s*\)/g;
+const requireRegex: RegExp = /_{0,2}require\s*\(\s*(["'].*?["'])\s*\)/g;
 const IMPORT_STRING_PREFIX: String = "__require_for_vite";
+const multilineCommentsRegex = /\/\*(.|[\r\n])*?\*\//gm
+const singleCommentsRegex = /\/\/.*/g
 
 export interface TransformRequireResult {
   code: string;
   replaced: boolean;
 }
 
-export function transformRequire(code: string, id: string):TransformRequireResult {
+export function transformRequire(code: string, id: string): TransformRequireResult {
+  let replaced = false;
+  // skip if has no require 
+  if (!/require/.test(code)) {
+    return {
+      replaced,
+      code
+    }
+  }
+  // empty multiline comments
+  code = code.replace(multilineCommentsRegex, '/* */');
+  // remove singleline comments
+  code = code.replace(singleCommentsRegex, ' ');
+
   const requireMatches = code.matchAll(requireRegex);
   let importsString = "";
   let packageName = "";
-  let replaced = false;
   for (let item of requireMatches) {
     if (!isString(item[1])) {
       console.warn(`Not supported dynamic import, file:${id}`);
