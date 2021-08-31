@@ -29,7 +29,7 @@ export default (options: PluginOptions = {}): Plugin => {
     return {
         name: 'vite:require-context',
         async transform(code: string, id: string) {
-            const requireContextRegex: RegExp = /require\.context\(([\w\W]+?)\)/g
+            const requireContextRegex: RegExp = /require\.context\(([\w\W]+?)\)($|;|\n|\r\n)/g
             const nodeModulesPath: string = '/node_modules/'
 
             // do not handle the files in node_modules
@@ -67,7 +67,7 @@ export default (options: PluginOptions = {}): Plugin => {
                 addedCode += generatedRequireContextStart + importsString + key2FilesMapString + contextFunctionString + generatedRequireContextEnd
                 transformedCode = transformedCode.replace(
                     requireContextMatch[0],
-                    requireContextFunctionName
+                    requireContextFunctionName + ";"
                 )
             })
 
