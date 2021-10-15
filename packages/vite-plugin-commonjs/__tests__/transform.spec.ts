@@ -50,3 +50,56 @@ test('isCommonJS', () => {
     expect(isCommonJS(`module.exports = {}`)).toBeTruthy();
     expect(isCommonJS(`exports = { hello: false }`)).toBeTruthy();
 });
+
+test('Both url and comments are present', () => {
+  //singleline comments
+  let code = `dosomething () {
+        console.log('https://www.baidu.com');//this is comments
+    }`;
+
+  let result = transformRequire(code, 'main.ts');
+  expect(result.code).toMatch(code);
+
+  //multiline comments
+  code = `dosomething () {
+        /*
+        * this is comments
+        * this is comments
+        * this is comments
+        */
+        console.log('https://www.baidu.com'); 
+    }`;
+
+  result = transformRequire(code, 'main.ts');
+  expect(result.code).toMatch(code);
+
+  code = `dosomething () {
+    console.log('https://www.baidu.com');//this is comments,require('./test')
+    }`;
+
+  let matcheCode = `dosomething () {
+    console.log('https://www.baidu.com');
+    }`;
+
+  result = transformRequire(code, 'main.ts');
+  expect(result.code).toMatch(matcheCode);
+
+  //multiline comments
+  code = `dosomething () {
+        /*
+        * this is comments
+        * this is comments,require('./test')
+        * this is comments
+        */
+        console.log('https://www.baidu.com'); 
+    }`;
+
+  matcheCode = `dosomething () {
+        /* */
+        console.log('https://www.baidu.com'); 
+    }`;
+
+  result = transformRequire(code, 'main.ts');
+  expect(result.code).toMatch(matcheCode);
+});
+
