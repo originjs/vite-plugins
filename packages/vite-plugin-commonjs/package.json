@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/originjs/vite-plugins/issues"
   },
-  "homepage": "https://github.com/originjs/vite-pluginst#readme",
+  "homepage": "https://github.com/originjs/vite-plugins/tree/main/packages/vite-plugin-commonjs",
   "dependencies": {
     "esbuild": "^0.12.6"
   },
