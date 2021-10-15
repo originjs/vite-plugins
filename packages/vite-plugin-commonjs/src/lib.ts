@@ -2,7 +2,7 @@ const commonJSRegex: RegExp = /\b(module\.exports|exports\.\w+|exports\s*=\s*)/;
 const requireRegex: RegExp = /_{0,2}require\s*\(\s*(["'].*?["'])\s*\)/g;
 const IMPORT_STRING_PREFIX: String = "__require_for_vite";
 const multilineCommentsRegex = /\/\*(.|[\r\n])*?\*\//gm
-const singleCommentsRegex = /\/\/.*/g
+const singleCommentsRegex = /([^\:])\/\/.*/g
 
 export interface TransformRequireResult {
   code: string;
@@ -11,21 +11,21 @@ export interface TransformRequireResult {
 
 export function transformRequire(code: string, id: string): TransformRequireResult {
   let replaced = false;
-  // skip if has no require 
+  // skip if has no require
   if (!/require/.test(code)) {
     return {
       replaced,
-      code
-    }
+      code,
+    };
   }
   // empty multiline comments
-  code = code.replace(multilineCommentsRegex, '/* */');
+  code = removeComments(code, multilineCommentsRegex, '/* */');
   // remove singleline comments
-  code = code.replace(singleCommentsRegex, ' ');
+  code = removeComments(code, singleCommentsRegex);
 
   const requireMatches = code.matchAll(requireRegex);
-  let importsString = "";
-  let packageName = "";
+  let importsString = '';
+  let packageName = '';
   for (let item of requireMatches) {
     if (!isString(item[1])) {
       console.warn(`Not supported dynamic import, file:${id}`);
@@ -42,12 +42,32 @@ export function transformRequire(code: string, id: string): TransformRequireResu
   }
   return {
     replaced,
-    code
-  }
+    code,
+  };
 }
 
 export function isCommonJS(code: string): boolean {
   return commonJSRegex.test(code);
+}
+
+function removeComments(
+  code: string,
+  exp: RegExp,
+  replaceValue?: string
+): string {
+  const matches = code.matchAll(exp);
+  let matcheStr: string;
+  for (let item of matches) {
+    matcheStr = item[0];
+    if (matcheStr.search(requireRegex) == -1) {
+      continue;
+    }
+    if (!replaceValue) {
+      replaceValue = item[1] || '';
+    }
+    code = code.replace(matcheStr, replaceValue);
+  }
+  return code;
 }
 
 function randomString(length: number): string {
