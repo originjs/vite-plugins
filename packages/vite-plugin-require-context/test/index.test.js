@@ -100,3 +100,14 @@ test('require context can not find any matched files', () => {
         expect(data.code).toBe(expectCode);
     });
 });
+
+test('require context surrounded by another function', () => {
+    const code = 'const requireComponents = getFilesByContext(require.context(\'/test/components\', true, /\.nomatch$/));\n';
+    const id = process.cwd().replace(/\\/g, '/') + '/' + 'src' + '/' + 'main.js';
+    const resultCode = require_context.default().transform(code, id);
+    const expectCode = fs.readFileSync('./test/expects/surroundedByFunction.txt','utf-8');
+
+    return resultCode.then(data => {
+        expect(data.code).toBe(expectCode);
+    });
+});
