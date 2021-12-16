@@ -78,6 +78,16 @@ export default (options: PluginOptions = {}): Plugin => {
     }
 }
 
+/**
+ * Handle the syntax in require.context(xxxxx).
+ * Considering the require.context may be called by another function, the calling may be like this:
+ * handRequireContext(require.context(dir, true, /*.vue/))
+ *
+ * It's not a easy work to get the xxxxx content in require.context using RegExp.
+ * So I'm using a stack to extract the content by comparing brackets.
+ *
+ * @param originalSyntax the original syntax content extracted by RegExp. There may be multi back brackets in the end of originalSyntax. e.g. (dir, true, /*.vue/))
+ */
 function handleRequireContextSyntax(originalSyntax: string) {
     if (!originalSyntax.startsWith('require.context')) {
         throw new Error(`Unexpected syntax met. Syntax does not start with 'require.context'`)
