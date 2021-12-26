@@ -49,6 +49,10 @@ test('require in comments', () => {
 test('isCommonJS', () => {
     expect(isCommonJS(`module.exports = {}`)).toBeTruthy();
     expect(isCommonJS(`exports = { hello: false }`)).toBeTruthy();
+    expect(isCommonJS(`exports.foo = 1`)).toBeTruthy();
+    expect(isCommonJS(`exports[key] = 1`)).toBeTruthy();
+    expect(isCommonJS(`exports[1] = 1`)).toBeTruthy();
+    expect(isCommonJS(`exports['some key'] = 1`)).toBeTruthy();
 });
 
 test('Both url and comments are present', () => {
