@@ -5,8 +5,6 @@
     "outDir": "lib",
     "target": "es2018",
     "module": "commonjs",
-    "lib": [
-      "es2020.string"
-    ]
+    "lib": ["es2020.string"]
   }
 }

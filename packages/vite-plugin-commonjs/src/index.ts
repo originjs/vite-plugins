@@ -1,8 +1,8 @@
-import { transformSync, TransformResult } from "esbuild";
-import { transformRequire, isCommonJS } from "./lib";
-import * as fs from "fs";
-import { Plugin } from "vite";
-import createFilter from "./filter";
+import { transformSync, TransformResult } from 'esbuild';
+import { transformRequire, isCommonJS } from './lib';
+import * as fs from 'fs';
+import { Plugin } from 'vite';
+import createFilter from './filter';
 
 export type Options = {
   include?: string | string[] | undefined;
@@ -11,24 +11,24 @@ export type Options = {
 };
 
 export function viteCommonjs(
-  options: Options = { skipPreBuild: false }
+  options: Options = { skipPreBuild: false },
 ): Plugin {
   const filter = createFilter(options.include, options.exclude);
   return {
-    name: "originjs:commonjs",
-    apply: "serve",
+    name: 'originjs:commonjs',
+    apply: 'serve',
     transform(code: string, id: string): TransformResult {
       if (
         !filter(id) ||
-        (options.skipPreBuild && id.indexOf("/node_modules/.vite/") !== -1)
+        (options.skipPreBuild && id.indexOf('/node_modules/.vite/') !== -1)
       ) {
         return null;
       }
 
       let result = transformRequire(code, id);
 
-      if (id.indexOf("/node_modules/.vite/") == -1 && isCommonJS(code)) {
-        return transformSync(result.code, { format: "esm" });
+      if (id.indexOf('/node_modules/.vite/') == -1 && isCommonJS(code)) {
+        return transformSync(result.code, { format: 'esm' });
       }
 
       if (result.replaced) {
@@ -45,12 +45,12 @@ export function viteCommonjs(
 
 export function esbuildCommonjs(include: string[] = []) {
   return {
-    name: "originjs:commonjs",
+    name: 'originjs:commonjs',
     setup(build) {
       build.onLoad(
         {
-          filter: new RegExp("(" + include.join("|") + ").*.js"),
-          namespace: "file",
+          filter: new RegExp('(' + include.join('|') + ').*.js'),
+          namespace: 'file',
         },
         async ({ path: id }) => {
           const code = fs.readFileSync(id).toString();
@@ -58,11 +58,11 @@ export function esbuildCommonjs(include: string[] = []) {
           if (result.replaced) {
             return {
               contents: result.code,
-              loader: "js",
+              loader: 'js',
             };
           }
           return null;
-        }
+        },
       );
     },
   };

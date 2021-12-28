@@ -6,10 +6,6 @@
     "target": "es2018",
     "module": "commonjs",
     "sourceMap": true,
-    "lib": [
-      "es2020.string"
-    ]
+    "lib": ["es2020.string"]
   }
 }
-
-    

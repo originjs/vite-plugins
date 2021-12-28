@@ -1,4 +1,4 @@
-import { win32, posix } from "path";
+import { win32, posix } from 'path';
 
 function ensureArray(thing: string) {
   if (Array.isArray(thing)) return thing;
@@ -11,9 +11,9 @@ function normalizePath(filename: string) {
 }
 
 export default (include, exclude) => {
-  const getMatcher = (id) => {
+  const getMatcher = id => {
     return {
-      test: (what) => what.indexOf(normalizePath(id)) >= 0,
+      test: what => what.indexOf(normalizePath(id)) >= 0,
     };
   };
 
@@ -21,7 +21,7 @@ export default (include, exclude) => {
   const excludeMatchers = ensureArray(exclude).map(getMatcher);
 
   return function result(id) {
-    if (typeof id !== "string") return false;
+    if (typeof id !== 'string') return false;
 
     const pathId = normalizePath(id);
     for (let i = 0; i < excludeMatchers.length; ++i) {
