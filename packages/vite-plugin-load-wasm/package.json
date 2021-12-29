@@ -1,0 +1,15 @@
+{
+  "name": "@originjs/vite-plugin-load-wasm",
+  "version": "1.0.0-beta.0",
+  "author": "@originjs",
+  "license": "MulanPSL2",
+  "main": "dist/index.js",
+  "repository": "https://github.com/originjs/vite-plugins.git",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}
