@@ -8,7 +8,7 @@
 export default {
   async setup() {
     const wasm = await import('../wasm/sumDouble.js')
-    console.log(wasm)
+    console.log('loading sumDouble wasm result:', wasm)
 
     const arr = new Float64Array(10)
     for (let i = 0; i < arr.length; i++) {
