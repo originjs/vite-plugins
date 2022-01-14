@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`wasm ast parser 1`] = `
+Map {
+  "./collisionDetectionRust_bg.js" => Array [
+    "__wbindgen_json_serialize",
+  ],
+}
+`;

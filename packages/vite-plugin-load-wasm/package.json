@@ -11,5 +11,10 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@webassemblyjs/ast": "^1.11.1",
+    "@webassemblyjs/wasm-parser": "^1.11.1",
+    "@rollup/pluginutils": "^4.1.2"
   }
 }
