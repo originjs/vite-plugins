@@ -1,6 +1,6 @@
 {
   "name": "@originjs/vite-plugin-load-wasm",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "author": "@originjs",
   "license": "MulanPSL2",
   "main": "dist/index.js",
