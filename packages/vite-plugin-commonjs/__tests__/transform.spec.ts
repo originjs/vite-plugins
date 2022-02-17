@@ -28,6 +28,18 @@ test('transform require', () => {
     expect(result.code).toMatch(/import \* as .+ from \'@\/page\/login';/);
 });
 
+test('require function on object', () => {
+  let code = `myObj.require("react");`
+  let result = transformRequire(code, 'main.ts');
+  expect(result.code).toMatch(`myObj.require("react");`);
+});
+
+test('require as part of function name', () => {
+  let code = `myrequire("react");`
+  let result = transformRequire(code, 'main.ts');
+  expect(result.code).toMatch(`myrequire("react");`);
+});
+
 test('require in comments', () => {
     //singleline comments
     let code = ` const a=0; // the hook will be setup by require("react").`
