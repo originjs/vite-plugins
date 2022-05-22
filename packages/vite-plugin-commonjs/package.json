@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/originjs/vite-plugins/tree/main/packages/vite-plugin-commonjs",
   "dependencies": {
+    "cjs-esm-exports": "^0.6.1",
     "esbuild": "^0.14.14"
   },
   "devDependencies": {
