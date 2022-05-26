@@ -1,5 +1,5 @@
-import { transformSync, TransformResult } from "esbuild";
-import { transformRequire, isCommonJS } from "./lib";
+import { TransformResult } from "esbuild";
+import { transformRequire, transformCommonJS, isCommonJS } from "./lib";
 import * as fs from "fs";
 import { Plugin } from "vite";
 import createFilter from "./filter";
@@ -8,10 +8,11 @@ export type Options = {
   include?: string | string[] | undefined;
   exclude?: string | string[] | undefined;
   skipPreBuild?: boolean;
+  addNamedExports?: boolean;
 };
 
 export function viteCommonjs(
-  options: Options = { skipPreBuild: false }
+  options: Options = { skipPreBuild: false, addNamedExports: false }
 ): Plugin {
   const filter = createFilter(options.include, options.exclude);
   return {
@@ -28,7 +29,7 @@ export function viteCommonjs(
       let result = transformRequire(code, id);
 
       if (id.indexOf("/node_modules/.vite/") == -1 && isCommonJS(code)) {
-        return transformSync(result.code, { format: "esm" });
+        return transformCommonJS(result.code, options.addNamedExports);
       }
 
       if (result.replaced) {

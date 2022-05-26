@@ -30,6 +30,9 @@ export default {
 -  `include: string[]`
   Dependencies that only need to be transform.
 
+-  `addNamedExports: boolean`
+  add named exports.
+
 ### CommonJS module in node_modules
 ```js
 import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
