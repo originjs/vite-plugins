@@ -34,7 +34,7 @@ export function transformRequire(code: string, id: string): TransformRequireResu
     replaced = true;
     packageName = `${IMPORT_STRING_PREFIX}_${randomString(6)}`;
     importsString += `import * as ${packageName} from ${item[1]};\n`;
-    code = code.replace(item[0], `(${packageName}.default || ${packageName})`);
+    code = code.replace(item[0], packageName);
   }
 
   if (replaced) {
