@@ -1,4 +1,4 @@
-import { transformRequire, isCommonJS } from "../src/lib";
+import { transformRequire, isCommonJS, transformCommonJS } from "../src/lib";
 
 test('transform require', () => {
     //general require
@@ -69,6 +69,30 @@ test('isCommonJS', () => {
     expect(isCommonJS(`exports[key] = 1`)).toBeTruthy();
     expect(isCommonJS(`exports[1] = 1`)).toBeTruthy();
     expect(isCommonJS(`exports['some key'] = 1`)).toBeTruthy();
+});
+
+test('transform named exports', () => {
+
+  let code = `
+    const a = 'a';
+
+    const obj = {
+      o1: 1,
+      o2: 2
+    };
+
+    module.exports = {
+      a,
+      b: 'b',
+      ...obj
+    };
+
+    exports.c = 'c';
+  `;
+  
+  const transformResult = transformCommonJS(code, true).code;
+  expect(transformResult).toMatch(/export {.*__named_exports_for_vite__a as a,.*}/);
+  expect(transformResult).toMatchSnapshot();
 });
 
 test('Both url and comments are present', () => {

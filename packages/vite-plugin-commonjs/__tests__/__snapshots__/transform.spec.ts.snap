@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transform named exports 1`] = `
+"var __getOwnPropNames = Object.getOwnPropertyNames;
+var __commonJS = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
+var require_stdin = __commonJS({
+  \\"<stdin>\\"(exports, module) {
+    const a = \\"a\\";
+    const obj = {
+      o1: 1,
+      o2: 2
+    };
+    module.exports = {
+      a,
+      b: \\"b\\",
+      ...obj
+    };
+    exports.c = \\"c\\";
+  }
+});
+
+    var __named_exports_for_vite = require_stdin();
+
+    var __named_exports_for_vite__a = __named_exports_for_vite['a'];
+var __named_exports_for_vite__b = __named_exports_for_vite['b'];
+var __named_exports_for_vite__o1 = __named_exports_for_vite['o1'];
+var __named_exports_for_vite__o2 = __named_exports_for_vite['o2'];
+var __named_exports_for_vite__c = __named_exports_for_vite['c'];
+
+    export {__named_exports_for_vite__a as a,__named_exports_for_vite__b as b,__named_exports_for_vite__o1 as o1,__named_exports_for_vite__o2 as o2,__named_exports_for_vite__c as c};
+    
+    export default __named_exports_for_vite;
+  
+"
+`;

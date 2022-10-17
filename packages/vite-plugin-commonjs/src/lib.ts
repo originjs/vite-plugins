@@ -1,3 +1,6 @@
+import { parse as parseCjs } from 'cjs-esm-exports';
+import { transformSync } from 'esbuild';
+
 const commonJSRegex: RegExp = /\b(module\.exports|exports\.\w+|exports\s*=\s*|exports\s*\[.*\]\s*=\s*)/;
 const requireRegex: RegExp = /(?<!\.)\b_{0,2}require\s*\(\s*(["'`].*?["'`])\s*\)/g;
 const IMPORT_STRING_PREFIX: String = "__require_for_vite";
@@ -48,6 +51,54 @@ export function transformRequire(code: string, id: string): TransformRequireResu
 
 export function isCommonJS(code: string): boolean {
   return commonJSRegex.test(code);
+}
+
+export function transformCommonJS(code: string, addNamedExports = false) {
+  const transformResult = transformSync(code, { format: "esm" });
+
+  if (!addNamedExports) {
+    return transformResult;
+  }
+
+  const esmCode = transformResult.code;
+  const defaultExportRegex = /export default (.*?);/;
+  const defaultExport = esmCode.match(defaultExportRegex)?.[1];
+
+  if (!defaultExport) {
+    return transformResult;
+  }
+
+  const { exports } = parseCjs('', code);
+  if (!exports || !exports.length) {
+    return transformResult;
+  }
+
+  const namedKey = '__named_exports_for_vite';
+  const namedExportsMap: Record<string, string> = exports.reduce(
+    (map: Record<string, string>, key: string) => {
+      map[key] = `${namedKey}['${key}']`;
+      return map;
+    },
+    {},
+  );
+  const namedKeys = Object.keys(namedExportsMap);
+
+  const namedExportsCode = `
+    var ${namedKey} = ${defaultExport};
+
+    ${namedKeys.map(key => {
+      return `var ${namedKey}__${key} = ${namedExportsMap[key]};`
+    }).join('\n')}
+
+    export {${namedKeys.map(key => `${namedKey}__${key} as ${key}`).join(',')}};
+    
+    export default ${namedKey};
+  `;
+  
+  return {
+    ...transformResult,
+    code: esmCode.replace(defaultExportRegex, namedExportsCode),
+  };
 }
 
 function removeComments(
