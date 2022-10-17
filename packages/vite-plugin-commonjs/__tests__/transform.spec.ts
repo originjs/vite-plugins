@@ -6,6 +6,10 @@ test('transform require', () => {
     let result = transformRequire(code, 'main.ts');
     expect(result.code).toMatch(/import \* as .+ from "react";/);
 
+    code = `require(\`react\`);`;
+    result = transformRequire(code, 'main.ts');
+    expect(result.code).toMatch(/import \* as .+ from 'react';/);
+
     //nested require
     code = `_interopRequire(require('./DatePicker'));`
     result = transformRequire(code, 'main.ts');
