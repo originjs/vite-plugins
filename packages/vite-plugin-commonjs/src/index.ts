@@ -3,6 +3,7 @@ import { transformRequire, isCommonJS } from "./lib";
 import * as fs from "fs";
 import { Plugin } from "vite";
 import createFilter from "./filter";
+import MagicString from 'magic-string';
 
 export type Options = {
   include?: string | string[] | undefined;
@@ -25,16 +26,17 @@ export function viteCommonjs(
         return null;
       }
 
-      let result = transformRequire(code, id);
+      const ms = new MagicString(code);
+      const replaced = transformRequire(ms, id);
 
       if (id.indexOf("/node_modules/.vite/") == -1 && isCommonJS(code)) {
-        return transformSync(result.code, { format: "esm" });
+        return transformSync(ms.toString(), { format: "esm" });
       }
 
-      if (result.replaced) {
+      if (replaced) {
         return {
-          code: result.code,
-          map: null,
+          code: ms.toString(),
+          map: ms.generateMap().toString(),
           warnings: null,
         };
       }
@@ -54,10 +56,11 @@ export function esbuildCommonjs(include: string[] = []) {
         },
         async ({ path: id }) => {
           const code = fs.readFileSync(id).toString();
-          let result = transformRequire(code, id);
-          if (result.replaced) {
+          const ms = new MagicString(code);
+          const replaced = transformRequire(ms, id);
+          if (replaced) {
             return {
-              contents: result.code,
+              contents: ms.toString(),
               loader: "js",
             };
           }
