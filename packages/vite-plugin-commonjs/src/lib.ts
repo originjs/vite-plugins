@@ -1,29 +1,23 @@
+import MagicString from 'magic-string';
+
 const commonJSRegex: RegExp = /\b(module\.exports|exports\.\w+|exports\s*=\s*|exports\s*\[.*\]\s*=\s*)/;
 const requireRegex: RegExp = /(?<!\.)\b_{0,2}require\s*\(\s*(["'`].*?["'`])\s*\)/g;
 const IMPORT_STRING_PREFIX: String = "__require_for_vite";
 const multilineCommentsRegex = /\/\*(.|[\r\n])*?\*\//gm
 const singleCommentsRegex = /([^\:])\/\/.*/g
 
-export interface TransformRequireResult {
-  code: string;
-  replaced: boolean;
-}
-
-export function transformRequire(code: string, id: string): TransformRequireResult {
+export function transformRequire(ms: MagicString, id: string): boolean {
   let replaced = false;
   // skip if has no require
-  if (!/require/.test(code)) {
-    return {
-      replaced,
-      code,
-    };
+  if (!/require/.test(ms.toString())) {
+    return replaced
   }
   // empty multiline comments
-  code = removeComments(code, multilineCommentsRegex, '/* */');
+  removeComments(ms, multilineCommentsRegex, '/* */');
   // remove singleline comments
-  code = removeComments(code, singleCommentsRegex);
+  removeComments(ms, singleCommentsRegex);
 
-  const requireMatches = code.matchAll(requireRegex);
+  const requireMatches = ms.toString().matchAll(requireRegex);
   let importsString = '';
   let packageName = '';
   for (let item of requireMatches) {
@@ -34,16 +28,13 @@ export function transformRequire(code: string, id: string): TransformRequireResu
     replaced = true;
     packageName = `${IMPORT_STRING_PREFIX}_${randomString(6)}`;
     importsString += `import * as ${packageName} from ${item[1].replace(/`/g, `'`)};\n`;
-    code = code.replace(item[0], `(${packageName}.default || ${packageName})`);
+    ms.replace(item[0], `(${packageName}.default || ${packageName})`);
   }
 
   if (replaced) {
-    code = importsString + code;
+    ms.prepend(importsString);
   }
-  return {
-    replaced,
-    code,
-  };
+  return replaced;
 }
 
 export function isCommonJS(code: string): boolean {
@@ -51,11 +42,11 @@ export function isCommonJS(code: string): boolean {
 }
 
 function removeComments(
-  code: string,
+  ms: MagicString,
   exp: RegExp,
   replaceValue?: string
-): string {
-  const matches = code.matchAll(exp);
+): void {
+  const matches = ms.toString().matchAll(exp);
   let matcheStr: string;
   for (let item of matches) {
     matcheStr = item[0];
@@ -65,9 +56,8 @@ function removeComments(
     if (!replaceValue) {
       replaceValue = item[1] || '';
     }
-    code = code.replace(matcheStr, replaceValue);
+    ms.replace(matcheStr, replaceValue);
   }
-  return code;
 }
 
 function randomString(length: number): string {
