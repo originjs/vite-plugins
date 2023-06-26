@@ -44,6 +44,12 @@ test('require as part of function name', () => {
   expect(result.code).toMatch(`myrequire("react");`);
 });
 
+test('require in object spread', () => {
+  let code = `const messagesDE = {...require('./i18n/de')}`
+  let result = transformRequire(code, 'main.ts');
+  expect(result.code).not.toMatch(code);
+});
+
 test('require in comments', () => {
     //singleline comments
     let code = ` const a=0; // the hook will be setup by require("react").`
