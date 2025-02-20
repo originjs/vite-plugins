@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/originjs/vite-plugins/tree/main/packages/vite-plugin-commonjs",
   "dependencies": {
-    "esbuild": "^0.14.14"
+    "esbuild": "^0.25.0"
   },
   "devDependencies": {
     "@types/node": "^15.12.2",
