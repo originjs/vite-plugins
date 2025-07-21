@@ -1,6 +1,6 @@
 {
   "name": "@originjs/vite-plugin-commonjs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A vite plugin that support commonjs to esm in vite",
   "scripts": {
     "build": "tsc -p tsconfig.json"
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/originjs/vite-plugins/tree/main/packages/vite-plugin-commonjs",
   "dependencies": {
-    "esbuild": "^0.14.14"
+    "esbuild": "^0.25.0"
   },
   "devDependencies": {
     "@types/node": "^15.12.2",
