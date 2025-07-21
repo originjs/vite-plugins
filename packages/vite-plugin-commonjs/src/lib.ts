@@ -1,7 +1,7 @@
 const commonJSRegex: RegExp = /\b(module\.exports|exports\.\w+|exports\s*=\s*|exports\s*\[.*\]\s*=\s*)/;
 const requireRegex: RegExp = /(?<!\.)\b_{0,2}require\s*\(\s*(["'`].*?["'`])\s*\)/g;
 const IMPORT_STRING_PREFIX: String = "__require_for_vite";
-const multilineCommentsRegex = /\/\*(.|[\r\n])*?\*\//gm
+const multilineCommentsRegex = /\/\*[\s\S]*?\*\//gm
 const singleCommentsRegex = /([^\:])\/\/.*/g
 
 export interface TransformRequireResult {
